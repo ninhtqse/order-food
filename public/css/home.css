@@ -1,0 +1,94 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+/* general */
+.db-ib{
+    display: inline-block;
+}
+/* header */
+.header{
+    background: linear-gradient(270deg, #FF6100 0%, #FFB841 99.97%);
+    height: 45px;
+    width: 100%;
+    text-align: center;
+}
+.header ul{
+    margin: 0;
+}
+
+.top{
+    background: white;
+    width: 100%;
+    height: 70px;
+    text-align: center;
+}
+.top .title{
+    padding-top: 20px;
+    font-size: 19px;
+    margin:0
+}
+.top .date-part{
+    color: #5cab40;
+    font-size: 14px;
+}
+.header li{
+    float: left;
+    list-style: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-left: 10px;
+    width: 100px;
+    height: 100%;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+}
+.header .active{
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.background{
+    background-image: url(../images/679478.jpg);
+    width: 100%;
+    min-height: 2160px;
+    height: 100%;
+    padding-top: 50px;
+}
+/* end header */
+
+.main{
+    margin: 0 auto;
+    background:white;
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+    padding: 0 50px;
+}
+
+.menu-title{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.cart-item{
+    width: 100%;
+}
+
+.cart-info-img img{
+    width: 72px;
+    height: 72px;
+    border-radius: 5px;
+}
+
+.cart-checkbox{
+    width: 20%;
+}
+
+.cart-info{
+    width: 50%;
+}
+
+.cart-price{
+    width: 30%;
+}
