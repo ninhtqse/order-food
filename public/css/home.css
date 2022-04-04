@@ -6,6 +6,11 @@ body{
 .db-ib{
     display: inline-block;
 }
+
+.hidden{
+    display: none;
+}
+
 /* header */
 .header{
     background: linear-gradient(270deg, #FF6100 0%, #FFB841 99.97%);
@@ -51,7 +56,7 @@ body{
 .background{
     background-image: url(../images/679478.jpg);
     width: 100%;
-    min-height: 2160px;
+    min-height: 1160px;
     height: 100%;
     padding-top: 50px;
 }
@@ -61,9 +66,21 @@ body{
     margin: 0 auto;
     background:white;
     width: 100%;
-    height: 300px;
     border-radius: 5px;
     padding: 0 50px;
+}
+.main h1{
+    font-size: 45px;
+    padding: 30px 0;
+}
+
+.main hr{
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 0.1px;
+    background: #e6e6e6;
 }
 
 .menu-title{
@@ -72,23 +89,223 @@ body{
 }
 
 .cart-item{
+    padding: 20px 0px;
     width: 100%;
+}
+.cart-item > div{
+    float: left;
+}
+.cart-info-img{
+    display: inline-block;
 }
 
 .cart-info-img img{
     width: 72px;
     height: 72px;
     border-radius: 5px;
+    border: 1px solid #c3cad8;
 }
 
 .cart-checkbox{
-    width: 20%;
+    width: 8%;
+}
+
+.cart-checkbox input{
+    cursor: pointer;
+    margin-top: 50%;
+    content: "";
+    border-width: 1.2px;
+    border-style: solid;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: block;
+    z-index: 1;
+    top: 0;
+    left: 2px;
+    border-color: #c3cad8;
+    background-color: #fff;
+}
+
+.cart-desc{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.cart-desc span{
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.cart-desc p{
+    color: gray;
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 5px;
 }
 
 .cart-info{
-    width: 50%;
+    width: 62%;
 }
 
 .cart-price{
     width: 30%;
+}
+
+.cart-price span{
+    font-weight: 500;
+}
+
+.cart-price p{
+    padding-top: 50px;
+    font-size: 14px;
+    color: gray;
+}
+
+.cart-desc ul{
+    margin: 0;
+    padding: 0;
+}
+
+.cart-desc li{
+    float: left;
+    list-style: none;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.quantity,.size{
+    padding-top: 8px;
+}
+
+.cart-desc li select{
+    padding: 0 30px;
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    border-radius: 5px;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+    box-shadow: none;
+    outline: none;
+    appearance: none;
+    background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') 100% 50% no-repeat #fff;
+    background-repeat: no-repeat;
+    background-position: center right 6px;
+    background-size: 20px;
+}
+
+.p_item_separator{
+    border-top-color: rgba(195,202,216,.5);
+    border-top-width: 1px;
+    border-top-style: dashed;
+    opacity: 0.8;
+    clear: both;
+}
+
+.search{
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    text-align: left;
+}
+
+.search input{
+    border-radius: 5px;
+    border: none;
+    border:1px solid gray;
+    width: 350px;
+    padding: 5px;
+    outline: none;
+}
+
+.result-search{
+    width: 350px;
+    background-color: whitesmoke;
+    max-height: 500px;
+    min-height: 500px;
+    text-align: left;
+    border-radius: 5px;
+    display: none;
+}
+
+.result-search ul{
+    margin: 0;
+    padding: 0;
+}
+
+.result-search ul li{
+    display: flex;
+    height: auto;
+    list-style: none;
+}
+
+.result-search ul li:not(:last-child){
+    border-bottom-color: rgba(195,202,216,.5);
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    clear: both;
+}
+
+.search-item{
+    padding: 20px 20px 10px 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.search-img {
+    position: relative;
+    width: 20%;
+    float: left;
+}
+
+.search-open{
+    display: inline-block;
+    position: absolute;
+    top: 40%;
+    left: -15px;
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+}
+
+.open{
+    color: rgb(35, 152, 57); 
+    background-color: rgb(35, 152, 57);
+}
+
+.close{
+    color: red; 
+    background-color: red;
+}
+
+.search-info{
+    width: 80%;
+    float: left;
+    padding-left: 10px;
+}
+
+.search-img img{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.search-info h5{
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+}
+
+.search-info span{
+    text-align: left;
+    display: inline-block;
+    font-size: 13px;
+}
+
+.search-info p{
+    font-size: 13px;
+    font-weight: 700;
 }

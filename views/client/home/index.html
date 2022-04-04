@@ -13,6 +13,14 @@
         <div class="top">
             <h3 class="title">Order Food Form</h3>
             <p class="date-part"></p>
+
+            <div class="search">
+                <input id="search" type="text" placeholder="Enter search data....">
+                <div class="result-search">
+                    <ul class="append-search">
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="header">
             <div class="container">
@@ -31,25 +39,13 @@
     <section>
         <div class="background">
             <div class="container">
-
+              
                 <div class="row">
                     <div class="col-lg-8 main">
+                        <h1 class="text-center">Order Food Form</h1>
                         <hr/>
                         <h4 class="menu-title">Menu</h4>
-
-                        <div class="cart-item">
-                            <div class="cart-checkbox">
-                                <input type="checkbox" class="form-check-input">
-                            </div>
-                            <div class="cart-info">
-                                <div class="cart-info-img">
-                                    <img src="images/679478.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="cart-price">
-
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -66,9 +62,143 @@
         var interval = setInterval(function() {
             var momentNow = moment();
             $('.date-part').html(momentNow.format('YYYY MMMM DD') + ' '
-                                + momentNow.format('dddd')
-                                .substring(0,3).toUpperCase() + '  |  ' + momentNow.format('A hh:mm:ss'));
+                + momentNow.format('dddd')
+                .substring(0,3).toUpperCase() + '  |  ' + momentNow.format('A hh:mm:ss'));
         }, 100);
+
+        function delay(callback, ms) {
+            var timer = 0;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                callback.apply(context, args);
+                }, ms || 0);
+            };
+        }
+
+        $('.search').keyup(delay(function (e) {
+            if($('#search').val() === null || $('#search').val() === undefined || $('#search').val() === ''){
+                $('.result-search').css('display','none');
+                return;
+            }
+            $.ajax({
+                url: "http://ninh.local:81/api/v1/request",
+                type: 'POST',
+                dataType:'json',
+                data: JSON.stringify({
+                    "url":"https://gappapi.deliverynow.vn/api/delivery/search_global",
+                    "request":{
+                        "category_group": 1,
+                        "city_id": 218,
+                        "delivery_only": true,
+                        "keyword": $('#search').val(),
+                        "sort_type": 8,
+                        "foody_services": [
+                            1
+                        ],
+                        "full_restaurant_ids": true
+                    }
+                })
+            })
+            .done(function( data ) {
+                let list_id = data.reply.search_result[0].restaurant_ids;
+                let slice   = list_id.slice(0, 5);
+                if(slice.length >= 5){
+                    $.ajax({
+                        url: "http://ninh.local:81/api/v1/request",
+                        type: 'POST',
+                        dataType:'json',
+                        data: JSON.stringify({
+                            "url":"https://gappapi.deliverynow.vn/api/delivery/get_infos",
+                            "request":{"restaurant_ids":slice}
+                        })
+                    })
+                    .done(function( data ) {
+                        let result = data.reply.delivery_infos;
+                        var html = '';
+                        for(let i = 0; i < result.length; i++){
+                            html += `
+                            <li class="search-item">
+                                <input class="hidden id" value="${result[i].restaurant_id}">
+                                <input class="hidden delivery_id" value="${result[i].delivery_id}">
+                                <div>
+                                    <div class="search-img">
+                                        <span class="search-open ${result[i].is_open ? `open` : 'close'}"></span>
+                                        <img src="${result[i].photos[12].value}" alt="">
+                                    </div>
+                                    <div class="search-info">
+                                        <h5> ${result[i].name}</h5>
+                                        <span>${result[i].address}</span>
+                                    </div>
+                                </div>
+                            </li>`
+                        }
+                        $('.append-search').html('');
+                        $('.append-search').html(html);
+                        $('.result-search').css('display','block');
+                    }); 
+                }
+            }); 
+        }, 500));
+
+        $('body').on('click','.search-item',function(){
+            let id = $(this).find('.id').val();
+            let delivery_id = $(this).find('.delivery_id').val();
+            $.ajax({
+                url: "http://ninh.local:81/api/v1/request/get",
+                type: 'POST',
+                dataType:'json',
+                data: JSON.stringify({
+                    "url":"https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=" + delivery_id 
+                })
+            }).done(res => {
+                let result = res.reply.menu_infos[0].dishes;
+                var html = '';
+                for(let i = 0; i < result.length; i++){
+                    html += `<div class="cart-item">
+                        <div class="cart-checkbox">
+                            <input type="checkbox">
+                        </div>
+                        <div class="cart-info">
+                            <div class="cart-info-img">
+                                <img src="${result[i].photos[5].value}" alt="">
+                            </div>
+                            <div class="cart-desc">
+                                <span>${result[i].name}</span>
+                                <p>${result[i].name}</p>
+                                <ul>
+                                    <li class="quantity">Quantity</li>
+                                    <li>
+                                        <select name="" id="">
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                        </select>
+                                    </li>
+                                    <li class="size">Size</li>
+                                    <li>
+                                        <select name="" id="">
+                                            <option value="">Small</option>
+                                            <option value="">L</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="cart-price text-right">
+                            <span>${result[i].price.text}</span>
+                            <p>Item subtotal: $0.00</p>
+                        </div>
+                    </div>`
+                    if(i < result.length - 1){
+                        html += `<div class="p_item_separator"></div>`;
+                    }
+                }
+                $('.main').find('.cart-item').remove();
+                $('.main').find('.p_item_separator').remove();
+                $('.main').append(html);
+            })
+        });
     });
 </script>
 </html>
