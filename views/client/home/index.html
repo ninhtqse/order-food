@@ -83,7 +83,7 @@
                 return;
             }
             $.ajax({
-                url: "http://ninh.local:81/api/v1/request",
+                url: "http://13.214.69.38/api/v2/request",
                 type: 'POST',
                 dataType:'json',
                 data: JSON.stringify({
@@ -106,7 +106,7 @@
                 let slice   = list_id.slice(0, 5);
                 if(slice.length >= 5){
                     $.ajax({
-                        url: "http://ninh.local:81/api/v1/request",
+                        url: "http://13.214.69.38/api/v2/request",
                         type: 'POST',
                         dataType:'json',
                         data: JSON.stringify({
@@ -146,7 +146,7 @@
             let id = $(this).find('.id').val();
             let delivery_id = $(this).find('.delivery_id').val();
             $.ajax({
-                url: "http://ninh.local:81/api/v1/request/get",
+                url: "http://13.214.69.38/api/v2/request/get",
                 type: 'POST',
                 dataType:'json',
                 data: JSON.stringify({
